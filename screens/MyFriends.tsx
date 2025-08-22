@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text, FlatList, ScrollView } from "react-native";
 import React from "react";
 import FriendsList from "../components/MyFriendsList";
-import SwitchButton from "../components/Switch";
+import SwitchButton from "../components/buildingBloks/Switch";
 
 export default function FriendsView() {
   return (

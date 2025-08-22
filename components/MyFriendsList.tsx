@@ -11,7 +11,6 @@ import { Image } from "react-native";
 import Friend from "../utils/FriendType";
 import { fakeFriends } from "../utils/fakeFriends";
 import { useNavigation } from "@react-navigation/native";
-import ChatBox from "../screens/ChatBox";
 import COLORS from "../theme/colors";
 
 export default function FriendsList() {
@@ -43,13 +42,10 @@ export default function FriendsList() {
     getFriends();
   }, []); */
 
-  const openChatBox = () => {
-    navigation.navigate("ChatBox");
-  };
   const renderItem = ({ item }: { item: Friend }) => {
     return (
       <View style={styles.containerFriend}>
-        <TouchableOpacity onPress={openChatBox}>
+        <TouchableOpacity>
           <Image></Image>
           <Text style={styles.display}>{item.name}</Text>
         </TouchableOpacity>

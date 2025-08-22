@@ -16,53 +16,42 @@ import Friend from "../utils/FriendType";
 import { fakeFriends } from "../utils/fakeFriends";
 import { transformMarker } from "../utils/transformMarker";
 import { loadDefaultLocation } from "../utils/location";
-import Switch from "./TogglePositionButton";
+import paris from "../utils/defaultLocation";
+import SwitchButton from "./blocks/Switch";
 
 export default function MapComponent() {
+  const [myLatitude, setMyLatitude] = useState(0);
+  const [myLongitude, setMyLongitude] = useState(0);
+
   const [friendsList, setFriendsList] = useState<Friend[]>([]);
+
   const [isAsk, setIsAsk] = useState(false);
-  const [isEnabled, setEnabled] = useState(false);
-  const [defaultCoords, setDefaultCoords] =
-    useState<Location.LocationObjectCoords>();
+  const [isEnabled, setEnabled] = useState(true);
 
-  const showPossibilites = () => {
-    setIsAsk(!isAsk);
-  };
+  useEffect(() => {
+    async function loadLocation() {
+      try {
+        let location = await loadDefaultLocation();
+        setMyLatitude(location.coords.latitude);
+        setMyLongitude(location.coords.longitude);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    loadLocation();
+    setFriendsList(fakeFriends);
+  }, []);
 
-  const paris = {
-    latitude: 48.8479003,
-    longitude: 2.2861294,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-  };
-  const markers = transformMarker(friendsList);
+  const markers = transformMarker(fakeFriends);
 
   const onMarkerSelected = (marker: any) => {
     Alert.alert(marker.name);
+    setIsAsk(true);
+    // go to chatbox
   };
-  /*  const fetchFriends = async () => {
-    try {
-      const backendURL = "/user?id=/friends";
-      const response = await fetch(backendURL, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setFriendsList(data);
-      } else {
-        console.error("Erreur API:", response.status);
-      }
-    } catch (error) {
-      console.error("Erreur réseau:", error);
-    }
-  }; */
 
-  const sendFlowers = () => {
-    console.log("send flowers");
+  const Invite = () => {
+    console.log("user id invited you to join");
   };
 
   const Message = () => {
@@ -73,20 +62,6 @@ export default function MapComponent() {
     console.log("removed from friend");
   };
 
-  useEffect(() => {
-    /*  fetchFriends(); */
-    async function loadLocation() {
-      try {
-        let location = await loadDefaultLocation();
-        setDefaultCoords(location.coords);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    loadLocation();
-    setFriendsList(fakeFriends);
-  }, []);
-
   if (Platform.OS === "web") {
     return (
       <View style={styles.loading}>
@@ -95,10 +70,10 @@ export default function MapComponent() {
     );
   }
 
-  if (!paris) {
+  if (!myLatitude && !myLongitude) {
     return (
       <View style={styles.container}>
-        <Text>Chargement de la position...</Text>
+        <Text> Map loading ...</Text>
       </View>
     );
   } else {
@@ -109,32 +84,39 @@ export default function MapComponent() {
           showsUserLocation={isEnabled}
           showsMyLocationButton
           style={styles.map}
-          initialRegion={paris}
+          initialRegion={{
+            latitude: myLatitude,
+            longitude: myLongitude,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+          }}
         >
           {markers.map((marker, index) => (
-            <Pressable onPress={showPossibilites}>
-              <Marker
-                key={index}
-                coordinate={marker}
-                onPress={() => onMarkerSelected(marker)}
-              />
-            </Pressable>
+            <Marker
+              key={index}
+              coordinate={marker}
+              onPress={() => onMarkerSelected(marker)}
+            />
           ))}
         </MapView>
+
         {isAsk && (
-          <View style={styles.ask}>
-            <TouchableOpacity onPress={sendFlowers}>
-              <Text style={styles.ask}> Send flowers </Text>
+          <View style={styles.askContainer}>
+            <TouchableOpacity onPress={Invite}>
+              <Text style={styles.askButtonText}> Invite </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={Message}>
-              <Text style={styles.ask}> Message </Text>
+              <Text style={styles.askButtonText}> Message </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={RemoveFriend}>
-              <Text style={styles.ask}> Remove from friends </Text>
+              <Text style={styles.askButtonText}> Remove from friends </Text>
             </TouchableOpacity>
           </View>
         )}
-        <Switch value={isEnabled} onToggle={setEnabled} />
+
+        <View>
+          <SwitchButton value={isEnabled} onToggle={setEnabled} />
+        </View>
       </View>
     );
   }
@@ -143,6 +125,7 @@ export default function MapComponent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: "relative",
   },
   menu: {
     position: "absolute",
@@ -151,13 +134,19 @@ const styles = StyleSheet.create({
     right: 0,
     paddingHorizontal: 10,
   },
-  ask: {
+  askContainer: {
     position: "absolute",
-    top: 30,
-    bottom: 30,
+    top: 50,
     left: 30,
-    right: 30,
-    backgroundColor: "rgba(112, 112, 112, 0.19)",
+    backgroundColor: "rgba(112, 112, 112, 0.8)",
+    padding: 10,
+    borderRadius: 8,
+    zIndex: 10, // <-- ça force le menu au-dessus
+  },
+  askButtonText: {
+    color: "#000",
+    fontSize: 16,
+    marginVertical: 5,
   },
   categoryButton: {
     flexDirection: "row",

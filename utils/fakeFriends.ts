@@ -9,7 +9,7 @@ export const fakeFriends = [
   {
     name: "Alessa",
     id: "2",
-    online: false,
+    online: true,
     latitude: 48.8187498,
     longitude: 2.2908791,
   },

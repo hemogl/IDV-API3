@@ -5,7 +5,7 @@ import { Switch } from "react-native-paper";
 const SwitchButton = ({ value, onToggle }: any) => {
   return (
     <View style={styles.button}>
-      <Switch value={value} onValueChange={onToggle}></Switch>;
+      <Switch value={value} onValueChange={onToggle}></Switch>
     </View>
   );
 };

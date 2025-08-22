@@ -24,7 +24,6 @@ export default function MapComponent() {
   const [isEnabled, setEnabled] = useState(false);
   const [defaultCoords, setDefaultCoords] =
     useState<Location.LocationObjectCoords>();
-  const [selectedCategory, setSelectedCategory] = useState("");
 
   const showPossibilites = () => {
     setIsAsk(!isAsk);

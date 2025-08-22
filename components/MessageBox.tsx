@@ -5,7 +5,7 @@ import { StyleSheet, View, Text, FlatList, ScrollView } from "react-native";
 export default function MessageBox() {
   return (
     <View>
-      <Text> Message Box </Text>
+      <Text> Chat </Text>
     </View>
   );
 }

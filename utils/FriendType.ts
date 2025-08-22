@@ -1,9 +1,10 @@
 type Friend = {
-  ID: string;
-  Name: string;
-  City: string;
-  Address: string;
-  Contacts: { [key: string]: string };
+  picture?: string;
+  name: string;
+  id: string;
+  online: boolean;
+  latitude: number;
+  longitude: number;
 };
 
 export default Friend;

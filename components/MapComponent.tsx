@@ -16,15 +16,12 @@ import Friend from "../utils/FriendType";
 import { fakeFriends } from "../utils/fakeFriends";
 import { transformMarker } from "../utils/transformMarker";
 import { loadDefaultLocation } from "../utils/location";
-import paris from "../utils/defaultLocation";
 import SwitchButton from "./blocks/Switch";
 
 export default function MapComponent() {
   const [myLatitude, setMyLatitude] = useState(0);
   const [myLongitude, setMyLongitude] = useState(0);
-
   const [friendsList, setFriendsList] = useState<Friend[]>([]);
-
   const [isAsk, setIsAsk] = useState(false);
   const [isEnabled, setEnabled] = useState(true);
 
@@ -44,8 +41,7 @@ export default function MapComponent() {
 
   const markers = transformMarker(fakeFriends);
 
-  const onMarkerSelected = (marker: any) => {
-    Alert.alert(marker.name);
+  const onMarkerSelected = () => {
     setIsAsk(true);
     // go to chatbox
   };
@@ -138,7 +134,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 50,
     left: 30,
-    backgroundColor: "rgba(112, 112, 112, 0.8)",
+    backgroundColor: "rgba(151, 149, 149, 0.43)",
     padding: 10,
     borderRadius: 8,
     zIndex: 10, // <-- ça force le menu au-dessus

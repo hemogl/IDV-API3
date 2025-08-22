@@ -5,6 +5,8 @@ import HomeScreen from "./screens/Home";
 import ChatBox from "./screens/ChatBox";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import MyProfile from "./screens/MyProfile";
+
 const Tab = createBottomTabNavigator();
 const chatIcon = require("./assets/chat.png");
 
@@ -31,24 +33,24 @@ function BottomTabNav() {
       }}
     >
       <Tab.Screen
-        name="Friends"
-        component={MyFriends}
+        name="Map"
+        component={HomeScreen}
         options={{
           tabBarIcon: ({ color = "gray", size = 24 }) => (
             <Image
-              source={require("./assets/chat.png")}
+              source={require("./assets/map.png")}
               style={{ width: size, height: size, tintColor: color }}
             />
           ),
         }}
       />
       <Tab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="Friends"
+        component={MyFriends}
         options={{
           tabBarIcon: ({ color = "gray", size = 24 }) => (
             <Image
-              source={require("./assets/chat.png")}
+              source={require("./assets/friends.png")}
               style={{ width: size, height: size, tintColor: color }}
             />
           ),
@@ -61,6 +63,18 @@ function BottomTabNav() {
           tabBarIcon: ({ color = "gray", size = 24 }) => (
             <Image
               source={require("./assets/chat.png")}
+              style={{ width: size, height: size, tintColor: color }}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="MyProfile"
+        component={MyProfile}
+        options={{
+          tabBarIcon: ({ color = "gray", size = 24 }) => (
+            <Image
+              source={require("./assets/profile.png")}
               style={{ width: size, height: size, tintColor: color }}
             />
           ),

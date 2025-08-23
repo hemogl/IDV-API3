@@ -28,8 +28,7 @@ export default function MyProfile() {
                 }}
                 style={styles.avatarImg}
               />
-
-              <View style={styles.avatarNotification} />
+              {isSwitchOn && <View style={styles.avatarNotification} />}
             </View>
 
             <View style={styles.profileBody}>

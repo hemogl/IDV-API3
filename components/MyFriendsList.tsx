@@ -16,6 +16,10 @@ import COLORS from "../theme/colors";
 export default function FriendsList() {
   const [myFriends, setMyFriends] = useState<Friend[]>([]);
   const navigation = useNavigation();
+
+  const goToChat = () => {
+    navigation.navigate("MessageScreen");
+  };
   /* 
   const getFriends = async () => {
     try {
@@ -45,7 +49,7 @@ export default function FriendsList() {
   const renderItem = ({ item }: { item: Friend }) => {
     return (
       <View style={styles.containerFriend}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={goToChat}>
           <Image></Image>
           <Text style={styles.display}>{item.name}</Text>
         </TouchableOpacity>

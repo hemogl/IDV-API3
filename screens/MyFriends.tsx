@@ -3,7 +3,7 @@ import React from "react";
 import FriendsList from "../components/MyFriendsList";
 import SwitchButton from "../components/buildingBloks/Switch";
 
-export default function FriendsView() {
+function FriendsView() {
   return (
     <View style={styles.container}>
       <FriendsList />
@@ -17,3 +17,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#fffcfcff",
   },
 });
+
+export default FriendsView;

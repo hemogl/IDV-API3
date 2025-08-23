@@ -10,7 +10,7 @@
   },
   "resolutions": {
   "react-native": "0.79.5"
-}
+},
   "dependencies": {
     "expo": "~53.0.20",
     "react": "19.0.0",
